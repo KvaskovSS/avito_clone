@@ -57,7 +57,9 @@ const ItemList: React.FC = () => {
         <Button 
           variant="contained" 
           onClick={() => navigate('/form')}
-          sx={{ whiteSpace: 'nowrap' }}
+          sx={{ whiteSpace: 'wrap', 
+            color: 'black'
+          }}
         >
           Разместить объявление
         </Button>

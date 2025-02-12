@@ -1,25 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Typography } from '@mui/material';
+import { useForm, FormProvider } from 'react-hook-form';
+import FormStepper from '../components/FormStepper';
+import { ItemsService } from '../services/apiService';
+import { Item } from '../types/types';
 
-type FormComponentProps = object
+const FormPage: React.FC = () => {
+  const { id } = useParams();
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const methods = useForm<Item>();
 
-const FormComponent: React.FC<FormComponentProps> = () => {
-    const [step, setStep] = useState(1);
-
-    const nextStep = () => {
-        setStep((prev) => prev + 1);
+  useEffect(() => {
+    const loadItem = async () => {
+      if (id) {
+        try {
+          const { data } = await ItemsService.getById(Number(id));
+          methods.reset(data);
+          setIsEditing(true);
+        } catch (error) {
+          console.error('Error loading item:', error);
+          navigate('/');
+        }
+      }
+      setLoading(false);
     };
+    loadItem();
+  }, [id, methods, navigate]);
 
-    const prevStep = () => {
-        setStep((prev) => prev - 1);
-    };
+  const onSubmit = async (data: Item) => {
+    try {
+      if (isEditing && id) {
+        await ItemsService.update(Number(id), data);
+      } else {
+        await ItemsService.create(data);
+      }
+      navigate('/list');
+    } catch (error) {
+      console.error('Error saving item:', error);
+    }
+  };
 
-    return (
-        <div>
-            <h2>Создание объявления</h2>
-        </div>
-    );
+  if (loading) return <div>Loading...</div>;
 
-    
+  return (
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        {isEditing ? 'Редактирование объявления' : 'Новое объявление'}
+      </Typography>
+      
+      <FormProvider {...methods}>
+        <FormStepper onSubmit={onSubmit} isEditing={isEditing} />
+      </FormProvider>
+    </Container>
+  );
 };
 
-export default FormComponent;
+export default FormPage;
