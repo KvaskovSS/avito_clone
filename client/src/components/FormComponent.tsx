@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Typography } from '@mui/material';
-import { useForm, FormProvider } from 'react-hook-form';
-import FormStepper from '../components/FormStepper';
-import { ItemsService } from '../services/apiService';
-import { Item } from '../types/types';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Container, Typography } from "@mui/material";
+import { useForm, FormProvider } from "react-hook-form";
+import FormStepper from "../components/FormStepper";
+import { ItemsService } from "../services/apiService";
+import { Item } from "../types/types";
 
 const FormPage: React.FC = () => {
   const { id } = useParams();
@@ -21,8 +21,8 @@ const FormPage: React.FC = () => {
           methods.reset(data);
           setIsEditing(true);
         } catch (error) {
-          console.error('Error loading item:', error);
-          navigate('/');
+          console.error("Error loading item:", error);
+          navigate("/");
         }
       }
       setLoading(false);
@@ -31,18 +31,18 @@ const FormPage: React.FC = () => {
   }, [id, methods, navigate]);
 
   useEffect(() => {
-    const draft = localStorage.getItem('draft');
+    const draft = localStorage.getItem("draft");
     if (draft && !id) {
       methods.reset(JSON.parse(draft));
     }
   }, []);
-  
+
   useEffect(() => {
     const saveDraft = () => {
-      localStorage.setItem('draft', JSON.stringify(methods.getValues()));
+      localStorage.setItem("draft", JSON.stringify(methods.getValues()));
     };
-    window.addEventListener('beforeunload', saveDraft);
-    return () => window.removeEventListener('beforeunload', saveDraft);
+    window.addEventListener("beforeunload", saveDraft);
+    return () => window.removeEventListener("beforeunload", saveDraft);
   }, [methods]);
 
   const onSubmit = async (data: Item) => {
@@ -52,9 +52,9 @@ const FormPage: React.FC = () => {
       } else {
         await ItemsService.create(data);
       }
-      navigate('/list');
+      navigate("/list");
     } catch (error) {
-      console.error('Error saving item:', error);
+      console.error("Error saving item:", error);
     }
   };
 
@@ -63,9 +63,9 @@ const FormPage: React.FC = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
-        {isEditing ? 'Редактирование объявления' : 'Новое объявление'}
+        {isEditing ? "Редактирование объявления" : "Новое объявление"}
       </Typography>
-      
+
       <FormProvider {...methods}>
         <FormStepper onSubmit={onSubmit} isEditing={isEditing} />
       </FormProvider>

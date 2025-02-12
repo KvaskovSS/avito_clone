@@ -1,9 +1,10 @@
-import { useFormContext } from 'react-hook-form';
-import { TextField, MenuItem, useMediaQuery, Grid2, Grid } from '@mui/material';
+import { TextField, MenuItem, useMediaQuery, Grid2, Grid } from "@mui/material";
+import { FormContext } from "./FormStepper";
+import { useContext } from "react";
 
 const GeneralStep = () => {
-  const { register, formState: { errors } } = useFormContext();
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const { formState, setFormState } = useContext(FormContext);
 
   return (
     <Grid2 container spacing={3}>
@@ -11,21 +12,28 @@ const GeneralStep = () => {
         <TextField
           label="Название"
           fullWidth
-          {...register('name', { required: 'Обязательное поле' })}
-          error={!!errors.name}
-          helperText={errors.name?.message?.toString()}
+          value={formState.userName}
+          onChange={(evt) => {
+            setFormState((prev) => ({
+              ...prev,
+              userName: evt.target.value,
+            }));
+          }}
         />
       </Grid>
-      
+
       <Grid item xs={12} md={6}>
         <TextField
           label="Категория"
           select
           fullWidth
-          defaultValue="Недвижимость"
-          {...register('type', { required: 'Обязательное поле' })}
-          error={!!errors.type}
-          helperText={errors.type?.message?.toString()}
+          value={formState.type}
+          onChange={(evt) => {
+            setFormState((prev) => ({
+              ...prev,
+              type: evt.target.value,
+            }));
+          }}
         >
           <MenuItem value="Недвижимость">Недвижимость</MenuItem>
           <MenuItem value="Авто">Авто</MenuItem>
@@ -37,17 +45,27 @@ const GeneralStep = () => {
         <TextField
           label="Локация"
           fullWidth
-          {...register('location', { required: 'Обязательное поле' })}
-          error={!!errors.location}
-          helperText={errors.location?.message?.toString()}
-        /> 
+          value={formState.location}
+          onChange={(evt) => {
+            setFormState((prev) => ({
+              ...prev,
+              location: evt.target.value,
+            }));
+          }}
+        />
       </Grid>
 
       <Grid item xs={12} md={6}>
         <TextField
           label="Ссылка на изображение"
           fullWidth
-          {...register('image')}
+          value={formState.image}
+          onChange={(evt) => {
+            setFormState((prev) => ({
+              ...prev,
+              image: evt.target.value,
+            }));
+          }}
         />
       </Grid>
 
@@ -57,12 +75,13 @@ const GeneralStep = () => {
           multiline
           rows={isMobile ? 3 : 5}
           fullWidth
-          {...register('description', { 
-            required: 'Обязательное поле',
-            minLength: { value: 20, message: 'Минимум 20 символов' }
-          })}
-          error={!!errors.description}
-          helperText={errors.description?.message?.toString()}
+          value={formState.description}
+          onChange={(evt) => {
+            setFormState((prev) => ({
+              ...prev,
+              description: evt.target.value,
+            }));
+          }}
         />
       </Grid>
     </Grid2>
