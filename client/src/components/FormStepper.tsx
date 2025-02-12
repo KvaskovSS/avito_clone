@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
 import GeneralStep from "./GeneralStep";
 import CategoryStep from "./CategoryStep";
+import createObject from "../utils/objectCreator";
 
 export const FormContext = createContext({});
 
@@ -13,12 +14,23 @@ const FormStepper: React.FC<{
   const steps = ["Основная информация", "Детали категории"];
 
   const [formState, setFormState] = useState({
-    userName: "",
-    type: "Недвижимость",
+    name: "",
+    type: "",
     location: "",
     image: "",
     description: "",
     propertyType: "",
+    area: "",
+    rooms: "",
+    price: "",
+    brand: "",
+    model: "",
+    year: "",
+    mileage: "",
+    serviceType: "",
+    experience: "",
+    cost: "",
+    workShedule: "",
   });
 
   const handleNext = () => {
@@ -56,17 +68,7 @@ const FormStepper: React.FC<{
             <Button
               variant="contained"
               onClick={() =>
-                onSubmit({
-                  name: formState.userName,
-                  description: formState.description,
-                  location: formState.location,
-                  image: formState.image,
-                  type: formState.type,
-                  propertyType: formState.type,
-                  area: 123,
-                  rooms: 123,
-                  price: 123,
-                })
+                onSubmit(createObject(formState.type, formState))
               }
             >
               {isEditing ? "Сохранить изменения" : "Опубликовать"}

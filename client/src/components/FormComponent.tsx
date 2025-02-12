@@ -31,7 +31,7 @@ const FormPage: React.FC = () => {
   }, [id, methods, navigate]);
 
   useEffect(() => {
-    const draft = localStorage.getItem("draft");
+    const draft = sessionStorage.getItem("draft");
     if (draft && !id) {
       methods.reset(JSON.parse(draft));
     }
@@ -39,7 +39,7 @@ const FormPage: React.FC = () => {
 
   useEffect(() => {
     const saveDraft = () => {
-      localStorage.setItem("draft", JSON.stringify(methods.getValues()));
+      sessionStorage.setItem("draft", JSON.stringify(methods.getValues()));
     };
     window.addEventListener("beforeunload", saveDraft);
     return () => window.removeEventListener("beforeunload", saveDraft);

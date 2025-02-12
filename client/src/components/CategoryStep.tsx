@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { set, useFormContext } from "react-hook-form";
 import { Grid, TextField, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { FormContext } from "./FormStepper";
@@ -13,7 +13,7 @@ const CategoryStep = () => {
   const { formState, setFormState } = useContext(FormContext);
 
   const renderFields = () => {
-    switch (type) {
+    switch (formState.type) {
       case "Недвижимость":
         return (
           <>
@@ -42,12 +42,13 @@ const CategoryStep = () => {
                 label="Площадь (м²)"
                 type="number"
                 fullWidth
-                {...register("area", {
-                  required: "Обязательное поле",
-                  min: { value: 1, message: "Минимум 1 м²" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.area}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        area: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -55,12 +56,13 @@ const CategoryStep = () => {
                 label="Количество комнат"
                 type="number"
                 fullWidth
-                {...register("rooms", {
-                  required: "Обязательное поле",
-                  min: { value: 1, message: "Минимум 1 комната" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.rooms}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        rooms: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -68,12 +70,13 @@ const CategoryStep = () => {
                 label="Цена"
                 type="number"
                 fullWidth
-                {...register("price", {
-                  required: "Обязательное поле",
-                  min: { value: 10000, message: "Минимум 10000 " },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.price}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        price: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
           </>
@@ -87,9 +90,13 @@ const CategoryStep = () => {
                 label="Марка"
                 select
                 fullWidth
-                {...register("brand", { required: "Обязательное поле" })}
-                error={!!errors.propertyType}
-                helperText={errors.propertyType?.message?.toString()}
+                value={formState.brand}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        brand: evt.target.value,
+                    }))
+                }}
               >
                 <MenuItem value="Квартира">BMW</MenuItem>
                 <MenuItem value="Дом">Toyota</MenuItem>
@@ -100,9 +107,13 @@ const CategoryStep = () => {
               <TextField
                 label="Модель"
                 fullWidth
-                {...register("model", { required: "Обязательное поле" })}
-                error={!!errors.location}
-                helperText={errors.location?.message?.toString()}
+                value={formState.model}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        model: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -110,12 +121,13 @@ const CategoryStep = () => {
                 label="Год выпуска"
                 type="number"
                 fullWidth
-                {...register("year", {
-                  required: "Обязательное поле",
-                  min: { value: 1700, message: "Их вроде еще не было :)" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.year}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        year: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -123,12 +135,13 @@ const CategoryStep = () => {
                 label="Пробег"
                 type="number"
                 fullWidth
-                {...register("mileage", {
-                  required: "Не обязательное поле",
-                  min: { value: 1, message: "Миниум 1 км" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.mileage}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        mileage: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
           </>
@@ -142,9 +155,13 @@ const CategoryStep = () => {
                 label="Тип услуги"
                 select
                 fullWidth
-                {...register("serviceType", { required: "Обязательное поле" })}
-                error={!!errors.serviceType}
-                helperText={errors.serviceType?.message?.toString()}
+                value={formState.serviceType}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        serviceType: evt.target.value,
+                    }))
+                }}
               >
                 <MenuItem value="Ремонт">Ремонт</MenuItem>
                 <MenuItem value="Уборка">Уборка</MenuItem>
@@ -156,12 +173,13 @@ const CategoryStep = () => {
                 label="Опыт работы (лет)"
                 type="number"
                 fullWidth
-                {...register("experience", {
-                  required: "Обязательное поле",
-                  min: { value: 1, message: "Минимум 1 м²" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.experience}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        experience: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -169,21 +187,26 @@ const CategoryStep = () => {
                 label="Стоимость"
                 type="number"
                 fullWidth
-                {...register("cost", {
-                  required: "Обязательное поле",
-                  min: { value: 1000, message: "Минимум 1000" },
-                })}
-                error={!!errors.area}
-                helperText={errors.area?.message?.toString()}
+                value={formState.cost}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        cost: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
                 label="Расписаие работы"
                 fullWidth
-                {...register("workSchedule", { required: "Обязательное поле" })}
-                error={!!errors.location}
-                helperText={errors.location?.message?.toString()}
+                value={formState.workShedule}
+                onChange={(evt) => {
+                    setFormState((prev) => ({
+                        ...prev,
+                        workShedule: evt.target.value,
+                    }))
+                }}
               />
             </Grid>
           </>

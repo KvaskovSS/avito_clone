@@ -16,7 +16,7 @@ const GeneralStep = () => {
           onChange={(evt) => {
             setFormState((prev) => ({
               ...prev,
-              userName: evt.target.value,
+              name: evt.target.value,
             }));
           }}
         />
