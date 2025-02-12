@@ -6,7 +6,7 @@ const ItemList: React.FC<ItemListProps> = () => {
 
   return (
     <div>
-      <h2>Детальная карточка </h2>
+      <h2>Список </h2>
     </div>
   );
 };

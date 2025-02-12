@@ -1,58 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
+import { Item } from '../types/types';
 
-
-const API_BASE_URL = 'http://localhost:3000'; 
-
-const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 5000, // Таймаут запроса
+const api: AxiosInstance = axios.create({
+  baseURL: 'http://localhost:3000',
 });
 
-
-apiClient.interceptors.request.use(
-  (config) => {
-    console.log('Отправка запроса:', config.url);
-    return config;
-  },
-  (error) => {
-    console.error('Ошибка при отправке запроса:', error);
-    return Promise.reject(error);
-  }
-);
-
-apiClient.interceptors.response.use(
-  (response) => {
-    console.log('Получен ответ:', response.config.url);
-    return response.data; 
-  },
-  (error) => {
-    console.error('Ошибка при получении ответа:', error.response?.data || error.message);
-    return Promise.reject(error);
-  }
-);
-
-
-export const createItem = async (itemData: any) => {
-  const response = await apiClient.post('/items', itemData);
-  return response;
-};
-
-export const getItems = async () => {
-  const response = await apiClient.get('/items');
-  return response;
-};
-
-export const getItemById = async (id: number) => {
-  const response = await apiClient.get(`/items/${id}`);
-  return response;
-};
-
-export const updateItem = async (id: number, updatedData: any) => {
-  const response = await apiClient.put(`/items/${id}`, updatedData);
-  return response;
-};
-
-export const deleteItem = async (id: number) => {
-  const response = await apiClient.delete(`/items/${id}`);
-  return response;
+export const ItemsService = {
+  getAll: () => api.get<Item[]>('/items'),
+  getById: (id: number) => api.get<Item>(`/items/${id}`),
+  create: (item: Omit<Item, 'id'>) => api.post<Item>('/items', item),
+  update: (id: number, item: Partial<Item>) => api.put<Item>(`/items/${id}`, item),
+  delete: (id: number) => api.delete(`/items/${id}`),
 };
