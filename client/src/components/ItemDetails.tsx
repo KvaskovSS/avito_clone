@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, Chip, useMediaQuery, Box } from '@mui/material';
 import { Item } from '../types/types';
 import { useNavigate } from 'react-router-dom';
+import validateImage from '../utils/validateImage';
 
 const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
           height: isMobile ? 200 : 'auto',
           objectFit: 'cover' 
         }}
-        image={item.image || '/placeholder.jpg'}
+        src={validateImage(item.image) ? item.image : '/placeholder.jpg'}
         alt={item.name}
       />
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>

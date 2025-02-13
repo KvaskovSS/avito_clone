@@ -4,7 +4,7 @@ export interface BaseItem {
     description: string;
     location: string;
     type: 'Недвижимость' | 'Авто' | 'Услуги';
-    image?: string;
+    image: string;
   }
   
   export interface RealEstateItem extends BaseItem {
