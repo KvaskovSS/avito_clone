@@ -156,7 +156,7 @@ const ItemList: React.FC = () => {
 
       <Grid container spacing={3}>
         {paginatedItems.map(item => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
+          <Grid item xs={12} sm={6} md={6} key={item.id}>
             <ItemDetails item={item} />
           </Grid>
         ))}
