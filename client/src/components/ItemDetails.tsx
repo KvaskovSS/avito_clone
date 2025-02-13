@@ -9,16 +9,20 @@ const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
   const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
-    <Card sx={{ 
-      display: 'flex', 
-      flexDirection: isMobile ? 'column' : 'row',
-      height: '100%',
-      transition: 'transform 0.2s',
-      '&:hover': {
-        transform: 'translateY(-4px)',
-        boxShadow: 3
-      }
-    }}>
+    <Card 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: isMobile ? 'column' : 'row',
+        height: '100%',
+        transition: 'transform 0.2s',
+        cursor: 'pointer', 
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: 3
+        }
+      }}
+      onClick={() => navigate(`/item/${item.id}`)} // Переход при клике на всю карточку
+    >
       <CardMedia
         component="img"
         sx={{ 
@@ -40,15 +44,17 @@ const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
           {item.location}
         </Typography>
-        {/* {'propertyType' in item && (
-          <Typography variant="body2">Тип: {item.propertyType}</Typography>
-        )} */}
+
         <Box sx={{ flexGrow: 1 }} />
+        
         <Button 
           variant="outlined" 
           fullWidth 
-          onClick={() => navigate(`/item/${item.id}`)}
           sx={{ mt: 2 }}
+          onClick={(e) => {
+            e.stopPropagation(); // Остановить всплытие события, если кликнули на кнопку
+            navigate(`/item/${item.id}`);
+          }}
         >
           Подробнее
         </Button>
