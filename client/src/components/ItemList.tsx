@@ -24,6 +24,9 @@ const ItemList: React.FC = () => {
     };
     loadItems();
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   const handleAdditionalFilterChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     setAdditionalFilters({
