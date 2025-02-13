@@ -1,12 +1,15 @@
 import { Grid, TextField, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { FormContext } from "./FormStepper";
+import { CurrentItem } from "../App";
+import { Item } from "../types/types";
 
 const CategoryStep = () => {
   const { formState, setFormState } = useContext(FormContext);
-
+  const { currentState : item, setCurrentState: setItem }  = useContext(CurrentItem);
+  
   const renderFields = () => {
-    switch (formState.type) {
+    switch (formState.type || item.type) {
       case "Недвижимость":
         return (
           <>
@@ -17,9 +20,9 @@ const CategoryStep = () => {
                 select
                 fullWidth
                 required 
-                value={formState.propertyType}
+                value={formState.propertyType || item.propertyType}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     propertyType: evt.target.value,
                   }));
@@ -37,9 +40,9 @@ const CategoryStep = () => {
                 type="number"
                 fullWidth
                 required 
-                value={formState.area}
+                value={formState.area || item.area}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     area: evt.target.value,
                   }));
@@ -53,9 +56,9 @@ const CategoryStep = () => {
                 type="number"
                 fullWidth
                 required 
-                value={formState.rooms}
+                value={formState.rooms || item.rooms}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     rooms: evt.target.value,
                   }));
@@ -69,9 +72,9 @@ const CategoryStep = () => {
                 type="number"
                 fullWidth
                 required 
-                value={formState.price}
+                value={formState.price || item.price}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     price: evt.target.value,
                   }));
@@ -91,9 +94,9 @@ const CategoryStep = () => {
                 select
                 fullWidth
                 required
-                value={formState.brand}
+                value={formState.brand || item.brand}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     brand: evt.target.value,
                   }));
@@ -110,9 +113,9 @@ const CategoryStep = () => {
                 label="Модель"
                 fullWidth
                 required
-                value={formState.model}
+                value={formState.model || item.model}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     model: evt.target.value,
                   }));
@@ -126,9 +129,9 @@ const CategoryStep = () => {
                 type="number"
                 fullWidth
                 required 
-                value={formState.year}
+                value={formState.year || item.year}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     year: evt.target.value,
                   }));
@@ -142,9 +145,9 @@ const CategoryStep = () => {
                 type="number"
                 fullWidth
                 required
-                value={formState.mileage}
+                value={formState.mileage || item.mileage}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     mileage: evt.target.value,
                   }));
@@ -164,9 +167,9 @@ const CategoryStep = () => {
                 select
                 fullWidth
                 required 
-                value={formState.serviceType}
+                value={formState.serviceType || item.serviceType}
                 onChange={(evt) => {
-                  setFormState((prev) => ({
+                  setFormState((prev: Item) => ({
                     ...prev,
                     serviceType: evt.target.value,
                   }));
@@ -184,9 +187,9 @@ const CategoryStep = () => {
                type="number"
                required
                fullWidth 
-               value={formState.experience}
+               value={formState.experience || item.experience}
                onChange={(evt) => {
-                 setFormState((prev) => ({
+                 setFormState((prev: Item) => ({
                    ...prev,
                    experience: evt.target.value,
                  }));
@@ -200,9 +203,9 @@ const CategoryStep = () => {
                type="number"
                fullWidth 
                required 
-               value={formState.cost}
+               value={formState.cost || item.cost}
                onChange={(evt) => {
-                 setFormState((prev) => ({
+                 setFormState((prev: Item) => ({
                    ...prev,
                    cost: evt.target.value,
                  }));
@@ -214,9 +217,9 @@ const CategoryStep = () => {
              <TextField
                label="Расписание работы"
                fullWidth 
-               value={formState.workShedule}
+               value={formState.workShedule || item.workShedule}
                onChange={(evt) => {
-                 setFormState((prev) => ({
+                 setFormState((prev: Item) => ({
                    ...prev,
                    workShedule: evt.target.value,
                  }));

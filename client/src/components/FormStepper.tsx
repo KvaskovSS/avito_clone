@@ -1,20 +1,23 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
 import GeneralStep from "./GeneralStep";
 import CategoryStep from "./CategoryStep";
 import createObject from "../utils/objectCreator";
 import isPublishDisabled from "../utils/publishButtonDisabler";
 import isNextDisabled from "../utils/nextButtonDiasabler";
+import { useSaveData } from "../hooks/useSaveData";
+import { Item } from "../types/types";
+import { CurrentItem } from "../App";
 
 export const FormContext = createContext({});
 
 const FormStepper: React.FC<{
-  onSubmit: (data: any) => void;
+  onSubmit: (data: Item) => void;
   isEditing: boolean;
 }> = ({ onSubmit, isEditing }) => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = ["Основная информация", "Детали категории"];
-
+  const { currentState : item, setCurrentState: setItem }  = useContext(CurrentItem);
   const [formState, setFormState] = useState({
     name: "",
     type: "",
@@ -34,6 +37,8 @@ const FormStepper: React.FC<{
     cost: "",
     workShedule: "",
   });
+
+  useSaveData({formState, setFormState});
 
   const handleNext = () => {
     setActiveStep((prev) => prev + 1);
@@ -71,10 +76,12 @@ const FormStepper: React.FC<{
           {activeStep === steps.length - 1 ? (
             <Button
               variant="contained"
-              onClick={() =>
+              onClick={() => {
+                localStorage.clear()
                 onSubmit(createObject(formState.type, formState))
               }
-              disabled={isPublishDisabled(formState)}
+              }
+              disabled={isPublishDisabled(formState, item)}
               color="primary"
               sx={{ flexGrow: 1, ml: 1 }}
             >
@@ -84,7 +91,7 @@ const FormStepper: React.FC<{
             <Button
               variant="contained"
               onClick={handleNext}
-              disabled={isNextDisabled(formState)}
+              // disabled={isNextDisabled(formState, item)}
               color="primary"
               sx={{ flexGrow: 1 }}
             >

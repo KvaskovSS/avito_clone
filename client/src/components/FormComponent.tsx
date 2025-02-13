@@ -30,22 +30,6 @@ const FormPage: React.FC = () => {
     loadItem();
   }, [id, methods, navigate]);
 
-  useEffect(() => {
-    const draft = sessionStorage.getItem("draft");
-    if (draft && !id) {
-      methods.reset(JSON.parse(draft));
-    }
-  }, []);
-
-  // TODO resolve saving
-  useEffect(() => {
-    const saveDraft = () => {
-      sessionStorage.setItem("draft", JSON.stringify(methods.getValues()));
-    };
-    window.addEventListener("beforeunload", saveDraft);
-    return () => window.removeEventListener("beforeunload", saveDraft);
-  }, [methods]);
-
   const onSubmit = async (data: Item) => {
     try {
       if (isEditing && id) {

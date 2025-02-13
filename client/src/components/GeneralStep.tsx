@@ -1,10 +1,12 @@
 import { TextField, MenuItem, Grid } from "@mui/material";
 import { FormContext } from "./FormStepper";
 import { useContext } from "react";
+import { Item } from "../types/types";
+import { CurrentItem } from "../App";
 
 const GeneralStep = () => {
   const { formState, setFormState } = useContext(FormContext);
-
+  const { currentState : item, setCurrentState: setItem }  = useContext(CurrentItem);
   return (
     <Grid container spacing={3}>
       {/* Название */}
@@ -13,9 +15,9 @@ const GeneralStep = () => {
           label="Название"
           fullWidth
           required 
-          value={formState.name || ""}
+          value={formState.name || item.name || ""}
           onChange={(evt) =>
-            setFormState((prev) => ({ ...prev, name: evt.target.value }))
+            setFormState((prev: Item) => ({ ...prev, name: evt.target.value }))
           }
         />
       </Grid>
@@ -27,9 +29,9 @@ const GeneralStep = () => {
           select
           fullWidth
           required 
-          value={formState.type || ""}
+          value={formState.type || item.type || ""}
           onChange={(evt) =>
-            setFormState((prev) => ({ ...prev, type: evt.target.value }))
+            setFormState((prev: Item) => ({ ...prev, type: evt.target.value }))
           }
         >
           <MenuItem value="">Выберите категорию</MenuItem>
@@ -45,9 +47,9 @@ const GeneralStep = () => {
           label="Локация"
           fullWidth
           required 
-          value={formState.location || ""}
+          value={formState.location || item.location || ""}
           onChange={(evt) =>
-            setFormState((prev) => ({ ...prev, location: evt.target.value }))
+            setFormState((prev: Item) => ({ ...prev, location: evt.target.value }))
           }
         />
       </Grid>
@@ -57,9 +59,9 @@ const GeneralStep = () => {
         <TextField
           label="Ссылка на изображение" 
           fullWidth
-          value={formState.image || ""}
+          value={formState.image || item.image || ""}
           onChange={(evt) =>
-            setFormState((prev) => ({ ...prev, image: evt.target.value }))
+            setFormState((prev: Item) => ({ ...prev, image: evt.target.value }))
           }
         />
       </Grid>
@@ -72,9 +74,9 @@ const GeneralStep = () => {
           rows={4}
           fullWidth
           required
-          value={formState.description || ""}
+          value={formState.description || item.description || ""}
           onChange={(evt) =>
-            setFormState((prev) => ({ ...prev, description: evt.target.value }))
+            setFormState((prev: Item) => ({ ...prev, description: evt.target.value }))
           }
         />
       </Grid>
@@ -83,3 +85,4 @@ const GeneralStep = () => {
 };
 
 export default GeneralStep;
+ 

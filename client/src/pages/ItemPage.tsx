@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Container, Typography, Button, Grid, useMediaQuery, Paper } from '@mui/material';
 import { ItemsService } from '../services/apiService';
-import { Item } from '../types/types'; 
 import validateImage from '../utils/validateImage';
+import { CurrentItem } from '../App';
 
 const ItemPage: React.FC = () => {
+  const { currentState: item , setCurrentState: setItem } = useContext(CurrentItem);
   const { id } = useParams();
-  const [item, setItem] = useState<Item | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width:600px)');
-
   useEffect(() => {
     const fetchItem = async () => {
       if (id) {
