@@ -1,52 +1,81 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
 import GeneralStep from "./GeneralStep";
 import CategoryStep from "./CategoryStep";
 import createObject from "../utils/objectCreator";
 import isPublishDisabled from "../utils/publishButtonDisabler";
 import isNextDisabled from "../utils/nextButtonDiasabler";
-import { useSaveData } from "../hooks/useSaveData";
 import { Item } from "../types/types";
 import { CurrentItem } from "../App";
 
-export const FormContext = createContext({});
+export const FormContext = createContext({} as Item);
+
+const initialState = {
+  name: "",
+  type: "",
+  location: "",
+  image: "",
+  description: "",
+  propertyType: "",
+  area: "",
+  rooms: "",
+  price: "",
+  brand: "",
+  model: "",
+  year: "",
+  mileage: "",
+  serviceType: "",
+  experience: "",
+  cost: "",
+  workShedule: "",
+};
 
 const FormStepper: React.FC<{
   onSubmit: (data: Item) => void;
   isEditing: boolean;
 }> = ({ onSubmit, isEditing }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const { currentState: item, setCurrentState: setItem } = useContext(CurrentItem);
   const steps = ["Основная информация", "Детали категории"];
-  const { currentState : item, setCurrentState: setItem }  = useContext(CurrentItem);
-  const [formState, setFormState] = useState({
-    name: "",
-    type: "",
-    location: "",
-    image: "",
-    description: "",
-    propertyType: "",
-    area: "",
-    rooms: "",
-    price: "",
-    brand: "",
-    model: "",
-    year: "",
-    mileage: "",
-    serviceType: "",
-    experience: "",
-    cost: "",
-    workShedule: "",
+  
+  const [formState, setFormState] = useState(() => {
+    if (isEditing && item) {
+      return { ...initialState, ...item };
+    }
+    const savedData = localStorage.getItem("draft");
+    return savedData ? JSON.parse(savedData) : { ...initialState };
   });
 
-  useSaveData({formState, setFormState});
+  // Автосохранение только для нового создания (не для редактирования)
+  useEffect(() => {
+    if (!isEditing) {
+      localStorage.setItem("draft", JSON.stringify(formState));
+    }
+  }, [formState, isEditing]);
 
-  const handleNext = () => {
-    setActiveStep((prev) => prev + 1);
+  // Загрузка черновика только при создании нового объекта
+  useEffect(() => {
+    if (!isEditing) {
+      const data = localStorage.getItem("draft");
+      if (data) setFormState(JSON.parse(data));
+    }
+  }, [isEditing]);
+
+  const handleSubmit = () => {
+    const newItem = createObject(formState.type, formState);
+    onSubmit(newItem);
+    
+    localStorage.removeItem("draft");
+    setFormState({ ...initialState });
+    
+    if (isEditing) {
+      setItem({ ...initialState }); 
+      setActiveStep(0);
+    }
   };
 
-  const handleBack = () => {
-    setActiveStep((prev) => prev - 1);
-  };
+  const handleNext = () => setActiveStep(prev => prev + 1);
+  const handleBack = () => setActiveStep(prev => prev - 1);
 
   return (
     <FormContext.Provider value={{ formState, setFormState }}>
@@ -76,12 +105,8 @@ const FormStepper: React.FC<{
           {activeStep === steps.length - 1 ? (
             <Button
               variant="contained"
-              onClick={() => {
-                localStorage.clear()
-                onSubmit(createObject(formState.type, formState))
-              }
-              }
-              disabled={isPublishDisabled(formState, item)}
+              onClick={handleSubmit}
+              disabled={isPublishDisabled(formState)}
               color="primary"
               sx={{ flexGrow: 1, ml: 1 }}
             >
@@ -91,7 +116,7 @@ const FormStepper: React.FC<{
             <Button
               variant="contained"
               onClick={handleNext}
-              // disabled={isNextDisabled(formState, item)}
+              disabled={isNextDisabled(formState)}
               color="primary"
               sx={{ flexGrow: 1 }}
             >

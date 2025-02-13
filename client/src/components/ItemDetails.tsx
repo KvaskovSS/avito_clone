@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography, Button, Chip, useMediaQuery, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Button, Chip, Box } from '@mui/material';
 import { Item } from '../types/types';
 import { useNavigate } from 'react-router-dom';
 import validateImage from '../utils/validateImage';

@@ -4,9 +4,10 @@ import ItemPage from './pages/ItemPage';
 import FormComponent from './components/FormComponent';
 import ItemList from './components/ItemList';
 import Layout from './components/Layout';
+import { Item } from './types/types';
 
 
-export const CurrentItem = createContext({});
+export const CurrentItem = createContext({} as Item);
 
 const App: React.FC = () => {
   const [currentState, setCurrentState] = useState({
