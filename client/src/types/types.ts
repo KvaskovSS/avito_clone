@@ -3,7 +3,7 @@ export interface BaseItem {
     name: string;
     description: string;
     location: string;
-    type: 'Недвижимость' | 'Авто' | 'Услуги';
+    type: 'Недвижимость' | 'Авто' | 'Услуги' | '';
     image: string;
   }
   
