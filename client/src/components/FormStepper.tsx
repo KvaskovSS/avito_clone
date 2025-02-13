@@ -3,6 +3,8 @@ import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
 import GeneralStep from "./GeneralStep";
 import CategoryStep from "./CategoryStep";
 import createObject from "../utils/objectCreator";
+import isPublishDisabled from "../utils/publishButtonDisabler";
+import isNextDisabled from "../utils/nextButtonDiasabler";
 
 export const FormContext = createContext({});
 
@@ -59,7 +61,9 @@ const FormStepper: React.FC<{
           <Button
             disabled={activeStep === 0}
             onClick={handleBack}
-            variant="outlined"
+            variant="contained"
+            color="primary"
+            sx={{ flexGrow: 1, mr: 1 }}
           >
             Назад
           </Button>
@@ -70,11 +74,20 @@ const FormStepper: React.FC<{
               onClick={() =>
                 onSubmit(createObject(formState.type, formState))
               }
+              disabled={isPublishDisabled(formState)}
+              color="primary"
+              sx={{ flexGrow: 1, ml: 1 }}
             >
               {isEditing ? "Сохранить изменения" : "Опубликовать"}
             </Button>
           ) : (
-            <Button variant="contained" onClick={handleNext}>
+            <Button
+              variant="contained"
+              onClick={handleNext}
+              disabled={isNextDisabled(formState)}
+              color="primary"
+              sx={{ flexGrow: 1 }}
+            >
               Далее
             </Button>
           )}

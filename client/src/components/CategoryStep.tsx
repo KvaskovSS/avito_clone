@@ -10,11 +10,13 @@ const CategoryStep = () => {
       case "Недвижимость":
         return (
           <>
+            {/* Тип недвижимости */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Тип недвижимости"
                 select
                 fullWidth
+                required 
                 value={formState.propertyType}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -28,11 +30,13 @@ const CategoryStep = () => {
                 <MenuItem value="Офис">Офис</MenuItem>
               </TextField>
             </Grid>
+            {/* Площадь */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Площадь (м²)"
                 type="number"
                 fullWidth
+                required 
                 value={formState.area}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -42,11 +46,13 @@ const CategoryStep = () => {
                 }}
               />
             </Grid>
+            {/* Количество комнат*/}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Количество комнат"
                 type="number"
                 fullWidth
+                required 
                 value={formState.rooms}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -56,11 +62,13 @@ const CategoryStep = () => {
                 }}
               />
             </Grid>
+            {/* Цена */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Цена"
                 type="number"
                 fullWidth
+                required 
                 value={formState.price}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -76,11 +84,13 @@ const CategoryStep = () => {
       case "Авто":
         return (
           <>
+          {/* Марка */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Марка"
                 select
                 fullWidth
+                required
                 value={formState.brand}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -94,10 +104,12 @@ const CategoryStep = () => {
                 <MenuItem value="Ford">Ford</MenuItem>
               </TextField>
             </Grid>
+            {/* Модель */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Модель"
                 fullWidth
+                required
                 value={formState.model}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -107,11 +119,13 @@ const CategoryStep = () => {
                 }}
               />
             </Grid>
+            {/* Год */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Год выпуска"
                 type="number"
                 fullWidth
+                required 
                 value={formState.year}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -121,9 +135,10 @@ const CategoryStep = () => {
                 }}
               />
             </Grid>
+            {/* Пробег */}
             <Grid item xs={12} md={6}>
               <TextField
-                label="Пробег"
+                label="Пробег" 
                 type="number"
                 fullWidth
                 value={formState.mileage}
@@ -141,11 +156,13 @@ const CategoryStep = () => {
       case "Услуги":
         return (
           <>
+          {/* Тип услуги */}
             <Grid item xs={12} md={6}>
               <TextField
                 label="Тип услуги"
                 select
                 fullWidth
+                required 
                 value={formState.serviceType}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -154,54 +171,58 @@ const CategoryStep = () => {
                   }));
                 }}
               >
-                <MenuItem value="Ремонт">Ремонт</MenuItem>
-                <MenuItem value="Уборка">Уборка</MenuItem>
-                <MenuItem value="Доставка">Доставка</MenuItem>
+               <MenuItem value="Ремонт">Ремонт</MenuItem>
+               <MenuItem value="Уборка">Уборка</MenuItem>
+               <MenuItem value="Доставка">Доставка</MenuItem>
               </TextField>
             </Grid>
+            {/* Опыт */}
             <Grid item xs={12} md={6}>
               <TextField
-                label="Опыт работы (лет)"
-                type="number"
-                fullWidth
-                value={formState.experience}
-                onChange={(evt) => {
-                  setFormState((prev) => ({
-                    ...prev,
-                    experience: evt.target.value,
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                label="Стоимость"
-                type="number"
-                fullWidth
-                value={formState.cost}
-                onChange={(evt) => {
-                  setFormState((prev) => ({
-                    ...prev,
-                    cost: evt.target.value,
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                label="Расписание работы"
-                fullWidth
-                value={formState.workShedule}
-                onChange={(evt) => {
-                  setFormState((prev) => ({
-                    ...prev,
-                    workShedule: evt.target.value,
-                  }));
-                }}
-              />
-            </Grid>
-          </>
-        );
+               label="Опыт работы (лет)"
+               type="number"
+               fullWidth 
+               value={formState.experience}
+               onChange={(evt) => {
+                 setFormState((prev) => ({
+                   ...prev,
+                   experience: evt.target.value,
+                 }));
+               }}
+             />
+           </Grid>
+           {/* Название */}
+           <Grid item xs={12} md={6}>
+             <TextField
+               label="Стоимость"
+               type="number"
+               fullWidth 
+               required 
+               value={formState.cost}
+               onChange={(evt) => {
+                 setFormState((prev) => ({
+                   ...prev,
+                   cost: evt.target.value,
+                 }));
+               }}
+             />
+           </Grid>
+           {/* Расписание */}
+           <Grid item xs={12} md={6}>
+             <TextField
+               label="Расписание работы"
+               fullWidth 
+               value={formState.workShedule}
+               onChange={(evt) => {
+                 setFormState((prev) => ({
+                   ...prev,
+                   workShedule: evt.target.value,
+                 }));
+               }}
+             />
+           </Grid>
+         </>
+       );
 
       default:
         return null;

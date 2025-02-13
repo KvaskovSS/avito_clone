@@ -12,6 +12,7 @@ const GeneralStep = () => {
         <TextField
           label="Название"
           fullWidth
+          required 
           value={formState.name || ""}
           onChange={(evt) =>
             setFormState((prev) => ({ ...prev, name: evt.target.value }))
@@ -25,6 +26,7 @@ const GeneralStep = () => {
           label="Категория"
           select
           fullWidth
+          required 
           value={formState.type || ""}
           onChange={(evt) =>
             setFormState((prev) => ({ ...prev, type: evt.target.value }))
@@ -42,6 +44,7 @@ const GeneralStep = () => {
         <TextField
           label="Локация"
           fullWidth
+          required 
           value={formState.location || ""}
           onChange={(evt) =>
             setFormState((prev) => ({ ...prev, location: evt.target.value }))
@@ -52,7 +55,7 @@ const GeneralStep = () => {
       {/* Ссылка на изображение */}
       <Grid item xs={12} md={6}>
         <TextField
-          label="Ссылка на изображение"
+          label="Ссылка на изображение" 
           fullWidth
           value={formState.image || ""}
           onChange={(evt) =>
@@ -68,6 +71,7 @@ const GeneralStep = () => {
           multiline
           rows={4}
           fullWidth
+          required
           value={formState.description || ""}
           onChange={(evt) =>
             setFormState((prev) => ({ ...prev, description: evt.target.value }))
