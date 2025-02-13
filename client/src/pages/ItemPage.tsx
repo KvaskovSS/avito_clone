@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Container, Typography, Button, Grid, useMediaQuery, Paper } from '@mui/material';
 import { ItemsService } from '../services/apiService';
-import { Item } from '../types/types';
+import { Item } from '../types/types'; 
 import validateImage from '../utils/validateImage';
 
 const ItemPage: React.FC = () => {

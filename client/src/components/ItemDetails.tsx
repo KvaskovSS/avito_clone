@@ -6,14 +6,14 @@ import validateImage from '../utils/validateImage';
 
 const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('(max-width:600px)');
+  // const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
     <Card 
       sx={{ 
         display: 'flex', 
-        flexDirection: isMobile ? 'column' : 'row',
-        height: '100%',
+        flexDirection: 'column',
+        height: '100%', 
         transition: 'transform 0.2s',
         cursor: 'pointer', 
         '&:hover': {
@@ -26,8 +26,8 @@ const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
       <CardMedia
         component="img"
         sx={{ 
-          width: isMobile ? '100%' : 200,
-          height: isMobile ? 200 : 'auto',
+          width: '100%', 
+          height: 350,
           objectFit: 'cover' 
         }}
         src={validateImage(item.image) ? item.image : '/placeholder.jpg'}
