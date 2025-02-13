@@ -40,9 +40,9 @@ const ItemDetails: React.FC<{ item: Item }> = ({ item }) => {
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
           {item.location}
         </Typography>
-        {'propertyType' in item && (
+        {/* {'propertyType' in item && (
           <Typography variant="body2">Тип: {item.propertyType}</Typography>
-        )}
+        )} */}
         <Box sx={{ flexGrow: 1 }} />
         <Button 
           variant="outlined" 

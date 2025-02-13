@@ -36,7 +36,7 @@ const FormPage: React.FC = () => {
       methods.reset(JSON.parse(draft));
     }
   }, []);
-
+// TODO resolve saving
   useEffect(() => {
     const saveDraft = () => {
       sessionStorage.setItem("draft", JSON.stringify(methods.getValues()));
