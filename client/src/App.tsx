@@ -11,6 +11,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/form" element={<FormComponent />} />
+          <Route path="/form/:id" element={<FormComponent />} />
           <Route path="/list" element={<ItemList />} />
           <Route path="/item/:id" element={<ItemPage />} />
           <Route path="/" element={<Navigate to="/list" />} />

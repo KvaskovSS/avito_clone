@@ -136,11 +136,12 @@ const CategoryStep = () => {
               />
             </Grid>
             {/* Пробег */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}> {/*Очень странно тут написано что неоьязаетльное поле но api не принимает без него*/}
               <TextField
                 label="Пробег" 
                 type="number"
                 fullWidth
+                required
                 value={formState.mileage}
                 onChange={(evt) => {
                   setFormState((prev) => ({
@@ -181,6 +182,7 @@ const CategoryStep = () => {
               <TextField
                label="Опыт работы (лет)"
                type="number"
+               required
                fullWidth 
                value={formState.experience}
                onChange={(evt) => {

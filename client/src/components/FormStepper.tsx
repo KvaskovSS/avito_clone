@@ -18,7 +18,7 @@ const FormStepper: React.FC<{
   const [formState, setFormState] = useState({
     name: "",
     type: "",
-    location: "", 
+    location: "",
     image: "",
     description: "",
     propertyType: "",

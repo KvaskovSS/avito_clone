@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Grid, TextField, Pagination, Select, MenuItem, Container, Box, Button } from '@mui/material';
+import { Grid, TextField, Pagination, Select, MenuItem, Container, Box, Button, InputLabel, FormControl } from '@mui/material';
 import { ItemsService } from '../services/apiService';
 import ItemDetails from '../components/ItemDetails';
 import { Item } from '../types/types';
@@ -10,6 +10,7 @@ const ItemList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<string>('all');
+  const [additionalFilters, setAdditionalFilters] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,13 +25,34 @@ const ItemList: React.FC = () => {
     loadItems();
   }, []);
 
+  const handleAdditionalFilterChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    setAdditionalFilters({
+      ...additionalFilters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const filteredItems = items
-    .filter(item => 
+    .filter(item =>
       item.name.toLowerCase().includes(search.toLowerCase()) &&
-      (category === 'all' || item.type === category)
+      (category === 'all' || item.type === category) &&
+      Object.keys(additionalFilters).every(key =>
+        !additionalFilters[key] || item[key].toString().includes(additionalFilters[key])
+      )
     );
 
   const paginatedItems = filteredItems.slice((page - 1) * 5, page * 5);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(e.target.value as string);
+    setPage(1);
+    setAdditionalFilters({});
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
@@ -40,12 +62,12 @@ const ItemList: React.FC = () => {
           variant="outlined"
           fullWidth
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearchChange}
         />
         
         <Select
           value={category}
-          onChange={(e) => setCategory(e.target.value as string)}
+          onChange={handleCategoryChange}
           sx={{ minWidth: 200 }}
         >
           <MenuItem value="all">Все категории</MenuItem>
@@ -62,6 +84,75 @@ const ItemList: React.FC = () => {
           Разместить объявление
         </Button>
       </Box>
+
+      {/* Дополнительные фильтры */}
+      {category === 'Недвижимость' && (
+        <Box sx={{ mb: 2 }}>
+          <TextField
+            label="Количество комнат"
+            variant="outlined"
+            name="rooms"
+            value={additionalFilters.rooms || ''}
+            onChange={handleAdditionalFilterChange}
+            sx={{ mr: 2 }}
+          />
+          <TextField
+            label="Площадь (м²)"
+            variant="outlined"
+            name="area"
+            value={additionalFilters.area || ''}
+            onChange={handleAdditionalFilterChange}
+            sx={{ mr: 2 }}
+          />
+        </Box>
+      )}
+
+      {category === 'Авто' && (
+        <Box sx={{ mb: 2 }}>
+          <FormControl variant="outlined" sx={{ mr: 2, minWidth: 240 }}>
+            <InputLabel>Марка</InputLabel>
+            <Select
+              label="Марка"
+              name="brand"
+              value={additionalFilters.brand || ''}
+              onChange={handleAdditionalFilterChange}
+            >
+              <MenuItem value="">Выберите марку</MenuItem>
+              <MenuItem value="BMW">BMW</MenuItem>
+              <MenuItem value="Toyota">Toyota</MenuItem>
+              <MenuItem value="Ford">Ford</MenuItem>
+            </Select>
+          </FormControl>
+          
+          <TextField
+            label="Год выпуска"
+            variant="outlined"
+            name="year"
+            value={additionalFilters.year || ''}
+            onChange={handleAdditionalFilterChange}
+            sx={{ mr: 2 }}
+          />
+        </Box>
+      )}
+
+      {category === 'Услуги' && (
+        <Box sx={{ mb: 2 }}>
+          <FormControl variant="outlined" sx={{ mr: 2, minWidth: 240 }}>
+            <InputLabel>Тип услуги</InputLabel>
+            <Select
+              label="Тип услуги"
+              name="serviceType"
+              value={additionalFilters.serviceType || ''}
+              onChange={handleAdditionalFilterChange}
+            >
+              <MenuItem value="">Выберите тип услуги</MenuItem>
+              <MenuItem value="Ремонт">Ремонт</MenuItem>
+              <MenuItem value="Уборка">Уборка</MenuItem>
+              <MenuItem value="Доставка">Доставка</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
 
       <Grid container spacing={3}>
         {paginatedItems.map(item => (
