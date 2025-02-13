@@ -8,32 +8,14 @@ import Layout from './components/Layout';
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div>
-        <h1>Клон Авито</h1>
-        {/* <nav> // уже не надо
-          <ul>
-            <li>
-              <a href="/form">Создать объявление</a>
-            </li>
-            <li>
-              <a href="/list">Список объявлений</a>
-            </li>
-          </ul>
-        </nav> */}
-
-        <Routes>
-          <Route path="/" element={<Layout />} >
-
+      <Routes>
+        <Route path="/" element={<Layout />}>
           <Route path="/form" element={<FormComponent />} />
-
           <Route path="/list" element={<ItemList />} />
-
           <Route path="/item/:id" element={<ItemPage />} />
-          
           <Route path="/" element={<Navigate to="/list" />} />
-          </Route>
-        </Routes>
-      </div>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };

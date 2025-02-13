@@ -7,7 +7,12 @@ const Layout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column'  }}>
+    <Box sx={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      justifyContent: 'space-between' 
+    }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -38,7 +43,7 @@ const Layout = () => {
         <Outlet />
       </Container>
 
-      <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 3, mt: 'auto' }}>
+      <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 3 }}>
         <Container maxWidth="lg">
           <Typography textAlign="center">
             © 2024 Авито Клон. Все права защищены.

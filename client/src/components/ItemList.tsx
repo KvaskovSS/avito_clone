@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Grid, TextField, Pagination, Select, MenuItem, Container, Box, Button, Grid2 } from '@mui/material';
+import { Grid, TextField, Pagination, Select, MenuItem, Container, Box, Button } from '@mui/material';
 import { ItemsService } from '../services/apiService';
 import ItemDetails from '../components/ItemDetails';
 import { Item } from '../types/types';
@@ -57,21 +57,19 @@ const ItemList: React.FC = () => {
         <Button 
           variant="contained" 
           onClick={() => navigate('/form')}
-          sx={{ whiteSpace: 'wrap', 
-            color: 'black'
-          }}
+          sx={{ whiteSpace: 'wrap', color: 'black' }}
         >
           Разместить объявление
         </Button>
       </Box>
 
-      <Grid2 container spacing={3}>
+      <Grid container spacing={3}>
         {paginatedItems.map(item => (
           <Grid item xs={12} sm={6} md={4} key={item.id}>
             <ItemDetails item={item} />
           </Grid>
         ))}
-      </Grid2>
+      </Grid>
 
       {filteredItems.length > 0 && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>

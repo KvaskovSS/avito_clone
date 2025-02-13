@@ -1,15 +1,8 @@
-import { set, useFormContext } from "react-hook-form";
 import { Grid, TextField, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { FormContext } from "./FormStepper";
 
 const CategoryStep = () => {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useFormContext();
-  const type = watch("type");
   const { formState, setFormState } = useContext(FormContext);
 
   const renderFields = () => {
@@ -24,12 +17,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.propertyType}
                 onChange={(evt) => {
-                  setFormState((prev) => {
-                    return {
-                      ...prev,
-                      propertyType: evt.target.value,
-                    };
-                  });
+                  setFormState((prev) => ({
+                    ...prev,
+                    propertyType: evt.target.value,
+                  }));
                 }}
               >
                 <MenuItem value="Квартира">Квартира</MenuItem>
@@ -44,10 +35,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.area}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        area: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    area: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -58,10 +49,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.rooms}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        rooms: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    rooms: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -72,10 +63,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.price}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        price: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    price: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -92,15 +83,15 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.brand}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        brand: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    brand: evt.target.value,
+                  }));
                 }}
               >
-                <MenuItem value="Квартира">BMW</MenuItem>
-                <MenuItem value="Дом">Toyota</MenuItem>
-                <MenuItem value="Офис">Ford</MenuItem>
+                <MenuItem value="BMW">BMW</MenuItem>
+                <MenuItem value="Toyota">Toyota</MenuItem>
+                <MenuItem value="Ford">Ford</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -109,10 +100,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.model}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        model: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    model: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -123,10 +114,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.year}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        year: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    year: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -137,10 +128,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.mileage}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        mileage: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    mileage: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -157,15 +148,15 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.serviceType}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        serviceType: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    serviceType: evt.target.value,
+                  }));
                 }}
               >
                 <MenuItem value="Ремонт">Ремонт</MenuItem>
                 <MenuItem value="Уборка">Уборка</MenuItem>
-                <MenuItem value="Уборка">Доствака</MenuItem>
+                <MenuItem value="Доставка">Доставка</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -175,10 +166,10 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.experience}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        experience: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    experience: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -189,23 +180,23 @@ const CategoryStep = () => {
                 fullWidth
                 value={formState.cost}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        cost: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    cost: evt.target.value,
+                  }));
                 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                label="Расписаие работы"
+                label="Расписание работы"
                 fullWidth
                 value={formState.workShedule}
                 onChange={(evt) => {
-                    setFormState((prev) => ({
-                        ...prev,
-                        workShedule: evt.target.value,
-                    }))
+                  setFormState((prev) => ({
+                    ...prev,
+                    workShedule: evt.target.value,
+                  }));
                 }}
               />
             </Grid>

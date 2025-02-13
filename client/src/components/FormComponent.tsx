@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import { useForm, FormProvider } from "react-hook-form";
 import FormStepper from "../components/FormStepper";
 import { ItemsService } from "../services/apiService";
@@ -36,7 +36,8 @@ const FormPage: React.FC = () => {
       methods.reset(JSON.parse(draft));
     }
   }, []);
-// TODO resolve saving
+
+  // TODO resolve saving
   useEffect(() => {
     const saveDraft = () => {
       sessionStorage.setItem("draft", JSON.stringify(methods.getValues()));
@@ -62,9 +63,14 @@ const FormPage: React.FC = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {isEditing ? "Редактирование объявления" : "Новое объявление"}
-      </Typography>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" color="textPrimary" gutterBottom>
+          {isEditing ? "Редактирование объявления" : "Новое объявление"}
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Пожалуйста, заполните поля формы ниже.
+        </Typography>
+      </Box>
 
       <FormProvider {...methods}>
         <FormStepper onSubmit={onSubmit} isEditing={isEditing} />
